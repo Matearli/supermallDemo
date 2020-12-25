@@ -1,3 +1,4 @@
+//home 组件相关的网络请求
 import {request} from "./request";
 
 export function getHomeMultidata() {
@@ -15,3 +16,13 @@ export function getHomeMultidata() {
 // test()
 //
 // test()
+//若函数中的变量被函数外的元素占用，函数栈就不会销毁，这就叫闭包
+export function getHomeGoods(type,page) {
+  return request({
+    url:"/home/data",
+    params:{
+      type,
+      page
+    }
+  })
+}
