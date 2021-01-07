@@ -34,24 +34,37 @@
                 //上拉刷新
                 pullUpLoad:this.pullUpLoad,
 
+                observeDOM:true,
+
                 click:true
             })
             //监听滚动位置
-            this.scroll.on("scroll",(position)=>{
-                this.$emit("scroll",position)
-            });
-            //监听上拉事件
-            this.scroll.on("pullingUp",()=>{
-              this.$emit("pullingUp")
-                // this.scroll.finishPullUp()
-            })
+            if (this.probeType ===2 || this.probeType ===3) {
+                this.scroll.on("scroll", (position) => {
+                    this.$emit("scroll", position)
+                });
+            }
+            // 监听上拉事件
+            // 监听scroll滚动到底部
+            if (this.pullUpLoad){
+                this.scroll.on("pullingUp",()=>{
+                   this.$emit("pullingUp")
+                })
+            }
         },
         methods:{
-            scrollTo(x,y,time=300){
-                this.scroll.scrollTo(x,y,time)
+            //调用其
+            scrollTo(x,y,time){
+               this.scroll && this.scroll.scrollTo(x,y,time)
+            },
+            refresh(){
+                this.scroll.refresh()
             },
             finishPullUp(){
-                this.scroll.finishPullUp()
+                this.scroll && this.scroll.finishPullUp()
+            },
+            getScrollY(){
+                return this.scroll ? this.scroll.y : 0  ;
             }
         }
     }

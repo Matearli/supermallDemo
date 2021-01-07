@@ -1,6 +1,6 @@
 <template>
-  <div class="goods-item">
-    <img :src="goodsItem.show.img">
+  <div class="goods-item" @click="goodsItemClick">
+    <img :src="goodsItem.show.img" @load="imageLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -19,7 +19,18 @@
                     return {}
                 }
             }
-        }
+        },
+        methods:{
+            imageLoad(){
+            //    1.调用scroll的refersh（）
+                //或者使用事件总线
+                this.$bus.$emit("itemImageLoad")
+            },
+            goodsItemClick(){
+                this.$router.push("/detail/"+this.goodsItem.iid)
+            }
+        },
+
     }
 </script>
 
